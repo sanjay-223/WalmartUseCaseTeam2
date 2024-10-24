@@ -1,0 +1,100 @@
+/* App.css */
+.App {
+  text-align: center;
+  background-color: #f0f8ff; /* Light blue background */
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.App-header {
+  background-color: #2874A6; /* Dark blue */
+  color: white;
+  padding: 20px;
+  font-size: 2em;
+  border-radius: 10px;
+}
+
+.App-body {
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 500px;
+  background-color: #fdfd96; /* Light yellow background */
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+input {
+  padding: 10px;
+  font-size: 1.1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #2874A6; /* Focused border color */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #2874A6;
+  color: white;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #21618C; /* Darker blue on hover */
+}
+.response {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e0ffff; /* Pale turquoise */
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+
+#cy {
+  width: 600px;  /* Set the desired width */
+  height: 600px; /* Set the desired height */
+  border: 1px solid #ccc; /* Optional: Border for visibility */
+  position: relative; /* Ensure proper positioning */
+  overflow: hidden; /* Prevent overflow */
+  margin: 0 auto; /* Center the div horizontally */
+}
+
+
+.response {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  justify-content:center;
+}
+
+.canvas
+{
+   left:0px;;
+}
+
+
+

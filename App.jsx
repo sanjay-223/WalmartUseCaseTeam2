@@ -148,16 +148,23 @@ return (
       <Plot
   data={[
     {
-      x: nodeData.map(node => node.x),
-      y: nodeData.map(node => node.y),
-      mode: 'markers+text',
-      type: 'scatter',
-      marker: { size: 30, color: 'blue' },
-      text: nodeData.map(node => node.displayText),  // Display last three letters
-      hovertext: nodeData.map(node => node.hoverText),  // Full details on hover
-      hoverinfo: 'text',  // Use hovertext for hover information
-      name: 'Nodes',
-    },
+  x: nodeData.map(node => node.x),
+  y: nodeData.map(node => node.y),
+  mode: 'markers+text',
+  type: 'scatter',
+  marker: { size: 50, color: 'blue' },  // Increased size to 40
+  text: nodeData.map(node => node.displayText),  // Display last three letters
+  hovertext: nodeData.map(node => node.hoverText),  // Full details on hover
+  hoverinfo: 'text',  // Use hovertext for hover information
+  name: 'Nodes',
+  textfont: {
+    color: 'white',       // Set text color to white
+    size: 18,             // Increase text size
+    family: 'Arial',      // Set font family
+    weight: 'bold'        // Set font weight to bold
+  },
+},
+
     ...edgeData.map(edge => ({
       x: edge.x,
       y: edge.y,
@@ -188,6 +195,46 @@ return (
   }}
   config={{ responsive: true }}
 />
+
+
+{response && response.top_3_names && response.top_3_phone && response.top_3_email ? (
+  <div className="top-three-table">
+    <h3>Top 3 Most Frequent Details</h3>
+    <table class="topTable" style={{ borderCollapse: "collapse", width: "100%" }}>
+      <thead>
+        <tr>
+          <th style={{ backgroundColor: "#4CAF50", color: "white", padding: "8px" ,textAlign:"center"}}>Top 3 Names</th>
+          <th style={{ backgroundColor: "#2196F3", color: "white", padding: "8px" ,textAlign:"center"}}>Top 3 Phones</th>
+          <th style={{ backgroundColor: "#FF5722", color: "white", padding: "8px" ,textAlign:"center"}}>Top 3 Emails</th>
+        </tr>
+      </thead>
+      <tbody>
+        {[0, 1, 2].map((index) => (
+          <tr key={index}>
+            <td style={{ padding: "8px", textAlign: "center", border: "1px solid #ddd" }}>
+              {response.top_3_names[index] && response.top_3_names[index][0]
+                ? `${response.top_3_names[index][0]} (${response.top_3_names[index][1] || '-'})`
+                : "-"}
+            </td>
+            <td style={{ padding: "8px", textAlign: "center", border: "1px solid #ddd" }}>
+              {response.top_3_phone[index] && response.top_3_phone[index][0]
+                ? `${response.top_3_phone[index][0]} (${response.top_3_phone[index][1] || '-'})`
+                : "-"}
+            </td>
+            <td style={{ padding: "8px", textAlign: "center", border: "1px solid #ddd" }}>
+              {response.top_3_email[index] && response.top_3_email[index][0]
+                ? `${response.top_3_email[index][0]} (${response.top_3_email[index][1] || '-'})`
+                : "-"}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : (
+  <p>Loading top 3 data...</p>
+)}
+
 
     </div>
   </div>

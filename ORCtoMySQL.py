@@ -1,5 +1,7 @@
 from pyspark.sql import SparkSession
+import time
 
+start_time = time.time()
 # Step 1: Set up Spark session with increased memory allocation and overhead
 spark = SparkSession.builder \
     .appName("ORCtoMySQL") \
@@ -9,7 +11,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Path to the ORC file (update with the actual path)
-orc_file_path = "/home/labuser/Desktop/Persistant_Folder/finalDf/"  # Update this path
+orc_file_path = "/home/labuser/Desktop/Persistant_Folder/finalDf3/"  # Update this path
 df = spark.read.orc(orc_file_path)
 
 # Show the schema to understand the structure (optional)
@@ -24,7 +26,7 @@ mysql_properties = {
 }
 
 # Define the table name in MySQL
-table_name = "explanation1"
+table_name = "Explanation"
 
 # Step 3: Write the DataFrame directly to MySQL
 df.select(
@@ -48,7 +50,7 @@ connection = mysql.connector.connect(
 )
 
 cursor = connection.cursor()
-index_query = f"CREATE INDEX IF NOT EXISTS idx_cluster_id ON {table_name} (cluster_id)"
+index_query = f"CREATE INDEX idx_cluster_id ON {table_name} (cluster_id)"
 cursor.execute(index_query)
 print("Index created on 'cluster_id' column.")
 
@@ -59,4 +61,10 @@ print("MySQL connection closed.")
 
 # Stop Spark session
 spark.stop()
+end_time = time.time()
 
+duration = end_time - start_time
+print("Time taken ",duration)
+
+with open("/home/labuser/Desktop/time.txt","w") as f:
+	f.write(f"Time taken for the job {duration} s")

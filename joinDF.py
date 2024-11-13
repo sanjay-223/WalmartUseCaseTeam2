@@ -1,6 +1,8 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import monotonically_increasing_id
+import time
 
+start_time = time.time()
 
 spark = SparkSession.builder \
     .appName("Read ORC File") \
@@ -24,7 +26,13 @@ join=tid1.join(tid2,tid1["Rno"]==tid2["Rno"],"left")
 join=join.withColumn("Sno", monotonically_increasing_id())
 join=join.select("tid1","name1","email1","phone1","address1","p2pe1","tid2","name2","email2","phone2","address2","p2pe2")
 join.printSchema()
-join.write.format("orc").save("/home/labuser/Desktop/Persistant_Folder/Joined_DF")
+join.write.format("orc").save("/home/labuser/Desktop/Persistant_Folder/Joined_DF2")
 
+end_time = time.time()
 
+duration = end_time - start_time
 
+print("time taken ",duration)
+
+with open("/home/labuser/Desktop/JoinTime.txt",'w') as f:
+	f.write(f"Time taken {duration:.2f}")

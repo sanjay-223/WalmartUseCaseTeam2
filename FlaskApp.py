@@ -23,7 +23,7 @@ def get_cluster_data(cluster_id):
     cursor = connection.cursor(dictionary=True)
 
     # Query to fetch rows with the specified cluster_id
-    query = "SELECT * FROM explanation1 WHERE cluster_id = %s"
+    query = "SELECT * FROM Explanation WHERE cluster_id = %s"
     cursor.execute(query, (cluster_id,))
     
     # Fetch all matching rows
@@ -42,6 +42,14 @@ def get_cluster_data(cluster_id):
     
     # Concatenate and drop duplicates
     node_df = pd.concat([df1, df2]).drop_duplicates(subset=['tid']).reset_index(drop=True)
+    top_3_names_with_counts = node_df['name'].value_counts().head(3).items()
+    top_3_list_name = list(top_3_names_with_counts)
+
+    top_3_phone_with_counts = node_df['phone'].value_counts().head(3).items()
+    top_3_list_phone = list(top_3_phone_with_counts)
+
+    top_3_email_with_counts = node_df['email'].value_counts().head(3).items()
+    top_3_list_email = list(top_3_email_with_counts)
     
     # Convert the node DataFrame to a dictionary format
     node_details = node_df.to_dict(orient='records')
@@ -62,9 +70,11 @@ def get_cluster_data(cluster_id):
         'data': df.to_dict(orient='records'),
         'nodes': node_list,
         'edges': edge_list,
-        'node_Details': node_details  # List of unique nodes with details
+        'node_Details': node_details,
+        'top_3_names' : top_3_list_name,
+        'top_3_phone' : top_3_list_phone,
+        'top_3_email' : top_3_list_email  # List of unique nodes with details
     })
 
 if __name__ == '__main__':
     app.run(debug=True)
-

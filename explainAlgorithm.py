@@ -3,6 +3,9 @@ from pyspark.sql.types import StructType, StructField, StringType
 from fuzzywuzzy import fuzz
 import Levenshtein
 import re
+import time
+
+start_time = time.time()
 
 # Initialize Spark session
 spark = SparkSession.builder \
@@ -124,7 +127,7 @@ def compare(row):
         explanation.append("Address Not Provided")
     
     # Return combined explanations with section breaks
-    return (row["tid1"],name1,email1,phone1,address1,p2pe1,row["tid2"],name2,email2,phone2,address2,p2pe2, "".join(explanation))
+    return (row["tid1"],name1,row['email1'],phone1,address1,p2pe1,row["tid2"],name2,row['email2'],phone2,address2,p2pe2, "".join(explanation))
 
 # Process the DataFrame using map
 result_rdd = joinDf.rdd.map(compare)
@@ -162,7 +165,14 @@ finalDf = finalDf.select(
 finalDf.printSchema()
 
 # Save to ORC file if desired
-output_path = "/home/labuser/Desktop/Persistant_Folder/finalDf2/"
+output_path = "/home/labuser/Desktop/Persistant_Folder/finalDf3/"
 # Uncomment the line below to write the final DataFrame to ORC format
 finalDf.write.orc(output_path)
 
+end_time = time.time()
+
+duration = end_time - start_time
+
+with open("/home/labuser/Desktop/time.txt","w") as f:
+	f.write(f"Time taken {duration:.2f} s")
+print("Time taken " , duration)

@@ -108,3 +108,17 @@ button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+
+
+.top-three-table
+{
+   width:80%;
+   margin-left:10%;
+   margin-bottom:2%;
+}
+
+.topTable
+{
+   width:80%;
+}
